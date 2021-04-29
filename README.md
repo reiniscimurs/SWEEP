@@ -8,6 +8,7 @@ Dependencies:
 * SciPy
 
 **Results**
+
 Original image on the left and the resulting output on the right. Identifying features have been removed for some images in this repository, but they are present when performing SWEEP.
 
 Result 1:
