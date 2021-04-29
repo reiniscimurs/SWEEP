@@ -8,9 +8,28 @@ Dependencies:
 *SciPy
 
 **Results**
-Original image on the left and the resulting output on the right. Identifying features have been removed for some images in this repository, but they are present when performing SWEEP
+Original image on the left and the resulting output on the right. Identifying features have been removed for some images in this repository, but they are present when performing SWEEP.
 
+Result 1:
 <p float="left">
-  <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/f1.jpg" width="30" />
-  <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/res1.jpg" width="30" /> 
+  <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/f1.jpg" width="300" />
+  <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/res1.jpg" width="300" /> 
+</p>
+
+Result 3:
+<p float="left">
+  <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/f3.jpg" width="300" />
+  <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/res3.jpg" width="300" /> 
+</p>
+
+Result 8:
+<p float="left">
+  <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/f8.jpg" width="300" />
+  <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/res8.jpg" width="300" /> 
+</p>
+
+Result 11:
+<p float="left">
+  <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/f11.jpg" width="300" />
+  <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/res11.jpg" width="300" /> 
 </p>
