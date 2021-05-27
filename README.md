@@ -34,3 +34,10 @@ Result 11:
   <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/f11.jpg" width="300" />
   <img src="https://github.com/reiniscimurs/SWEEP/blob/main/Results/res11.jpg" width="300" /> 
 </p>
+
+
+Publish the map on the map server (replace "map_name" with the name of the map):
+
+    rosrun map_server map_server map_name_ros.yaml
+    
+Visualize in Rviz by adding a map and setting the /map topic
