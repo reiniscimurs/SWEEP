@@ -27,15 +27,16 @@ dot_idx = file_name.find('.')
 output_name = file_name[:dot_idx]
 
 # Perform Gamma correction
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-mid = 0.5
-mean = np.mean(gray)
-gamma = math.log(mid * 255) / math.log(mean)
-print(f'Gamma correction with gamma value {gamma}')
-image = np.power(image, gamma).clip(0, 255).astype(np.uint8)
+if d_args.gamma:
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    mid = 0.5
+    mean = np.mean(gray)
+    gamma = math.log(mid * 255) / math.log(mean)
+    print(f'Gamma correction with gamma value {gamma}')
+    image = np.power(image, gamma).clip(0, 255).astype(np.uint8)
 
 image = cv2.bilateralFilter(image, 15, 50, 50)
-scale_percent = 60  # percent of original size
+scale_percent = d_args.resize  # percent of original size
 width = int(image.shape[1] * scale_percent / 100)
 height = int(image.shape[0] * scale_percent / 100)
 dim = (width, height)
@@ -72,7 +73,10 @@ cv2.destroyAllWindows()
 
 """ WALL EXTRACTION """
 print("Extracting contours")
-_, contours, hierarchy = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+try:
+    contours, hierarchy = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+except:
+    contours = []
 upd_c = []
 for c in contours:
     if len(c) > cont_s1:
@@ -179,7 +183,10 @@ print("Extracting edge pixel contours")
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 edges = cv2.Canny(gray, 50, 200)
 
-_, contours, hierarchy = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+try:
+    contours, hierarchy = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+except:
+    contours = []
 
 upd_c = []
 for c in contours:
@@ -313,6 +320,9 @@ while esc == 0:
     cv2.imshow('Extracted walls', image)
     esc = cv2.waitKey() & 0xFF
 
+if len(square) < 4:
+    square = [[0, 0], [len(image)-1, 0], [len(image)-1, len(image[0])-1], [0, len(image[0])-1]]
+
 cv2.destroyAllWindows()
 image2 = image.copy()
 rect = cv2.minAreaRect(np.array(square))
@@ -379,7 +389,6 @@ cv2.destroyAllWindows()
 
 cv2.imwrite(output_name + '_walls_cor.jpg', dst)
 
-
 """ CREATING A ROS MAP """
 
 
@@ -404,7 +413,7 @@ resolution = d_args.resolution
 mx = []
 my = []
 # Measure the pixel size by manually setting a distance between given pixels
-cv2.namedWindow('Measure Distance', cv2.WINDOW_NORMAL)
+cv2.namedWindow('Measure Distance', cv2.WINDOW_AUTOSIZE)
 cv2.imshow('Measure Distance', image)
 print("Click on two points in the image to measure distance")
 cv2.setMouseCallback('Measure Distance', measure)
@@ -447,7 +456,7 @@ def get_origin(event, x, y, flags, param):
         draw_line(o_x, o_y, x, y)
 
 
-cv2.namedWindow('Show Origin', cv2.WINDOW_NORMAL)
+cv2.namedWindow('Show Origin', cv2.WINDOW_AUTOSIZE)
 cv2.imshow('Show Origin', image)
 print("Select point of origin")
 cv2.setMouseCallback('Show Origin', get_origin)
@@ -491,7 +500,7 @@ cv2.imwrite(completeFileNameMap, image)
 # scaling factors and biases for each axis.
 yaml.write("image: " + mapName + ".pgm\n")
 yaml.write("resolution: " + str(resolution) + "\n")
-yaml.write("origin: [" + str(rotated_vec[0]) + "," + str(rotated_vec[1]) + "," + "0.00" + "]\n")
+yaml.write("origin: [" + str(rotated_vec[0]) + "," + str(rotated_vec[1]) + "," + str(rotation_radians) + "]\n")
 yaml.write("negate: 0\noccupied_thresh: " + str(d_args.occupied) + "\nfree_thresh: " + str(d_args.free) + "\n")
 yaml.write("orig_angle: " + str(rotation_radians) + "\n")
 yaml.write("x_scale: " + str(d_args.x_scale) + "\n")

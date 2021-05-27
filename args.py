@@ -17,6 +17,11 @@ def get_arguments():
     parser.add_argument("--filter_size", "-fs", help="Filter size for filtering the outliers",
                         type=int, default=100)
 
+    parser.add_argument("--gamma", help="Use automatic gamma correction",
+                        type=bool, default=False)
+    parser.add_argument("--resize", help="Resize percententege of the output image",
+                        type=int, default=60)
+
     parser.add_argument("--resolution", "-r", help="Manually set pixel resolution",
                         type=float, default=0.5)
     parser.add_argument("--measure", "-m", help="Weather to measure the pixel resolution in image",
